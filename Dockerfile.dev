@@ -1,0 +1,37 @@
+# base image elixer to start with
+FROM elixir:1.6.0
+
+# setup working directory
+WORKDIR /usr/src/app
+
+# Set and expose PORT environmental variable
+EXPOSE 4000
+
+# install hex (Elixir package manager) and rebar (Erlang build tool)
+RUN mix local.hex --force
+RUN mix local.rebar --force
+
+# install the latest phoenix
+RUN mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez --force
+
+# install node
+RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh
+RUN bash nodesource_setup.sh
+RUN apt-get install nodejs
+
+# copy app files
+ADD . /usr/src/app
+
+# install dependencies and compile project
+RUN mix deps.get
+RUN mix compile
+
+# install node dependencies
+WORKDIR /usr/src/app/assets
+RUN npm install
+RUN node node_modules/brunch/bin/brunch build
+
+# run phoenix in *dev* mode on port 4000
+CMD mix do ecto.migrate, phx.server
+
+# Build it: docker build -t dancing-koala:latest .
