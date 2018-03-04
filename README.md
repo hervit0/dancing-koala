@@ -45,6 +45,8 @@ psql -U postgres
 ```
 
 ### Deployement notes
+
+Deployement preparation:
 ```
 heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.git"
 heroku buildpacks:add https://github.com/gjaldon/heroku-buildpack-phoenix-static.git
@@ -54,3 +56,8 @@ heroku config:set SECRET_KEY_BASE="xvafzY4y01jYuzLm3ecJqo008dVnU3CN4f+MamNd1Zue4
 ```
 
 (And no it's not that secret.)
+
+Deploy:
+```
+git push heroku master
+```

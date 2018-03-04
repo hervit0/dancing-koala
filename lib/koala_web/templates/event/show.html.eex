@@ -1,0 +1,23 @@
+<h2>Show Event</h2>
+
+<ul>
+
+  <li>
+    <strong>Location:</strong>
+    <%= @event.location %>
+  </li>
+
+  <li>
+    <strong>Expenses:</strong>
+    <%= @event.expenses %>
+  </li>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @event.date %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: event_path(@conn, :edit, @event) %></span>
+<span><%= link "Back", to: event_path(@conn, :index) %></span>
