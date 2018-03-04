@@ -25,4 +25,4 @@
   </tbody>
 </table>
 
-<span><%= link "New Entry", to: event_entry_path(@conn, :new, @event) %></span>
+<span><%= link "New Entry", to: event_entry_path(@conn, :new, @event), class: "btn btn-default btn-xs" %></span>

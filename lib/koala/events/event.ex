@@ -13,13 +13,13 @@ defmodule Koala.Events.Event do
     field :expenses, :float
     field :location, :string
 
-    has_many :events, Entry
+    has_many :entries, Entry
 
     timestamps()
   end
 
   @doc false
-  def changeset(event, attrs) do
+  def changeset(event, attrs \\ %{}) do
     event
     |> cast(attrs, [:location, :expenses, :date])
     |> validate_required([:location, :expenses, :date])

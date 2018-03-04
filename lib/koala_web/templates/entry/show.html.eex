@@ -14,5 +14,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: event_entry_path(@conn, :edit, @event, @entry) %></span>
-<span><%= link "Back", to: event_entry_path(@conn, :index, @event) %></span>
+<span><%= link "Edit", to: event_entry_path(@conn, :edit, @event, @entry), class: "btn btn-default btn-xs" %></span>
+<span><%= link "Back", to: event_entry_path(@conn, :index, @event), class: "btn btn-default btn-xs" %></span>

@@ -18,7 +18,7 @@ defmodule Koala.Entries.Entry do
   end
 
   @doc false
-  def changeset(entry, attrs) do
+  def changeset(entry, attrs \\ %{}) do
     entry
     |> cast(attrs, [:customers_number, :price])
     |> validate_required([:customers_number, :price])
