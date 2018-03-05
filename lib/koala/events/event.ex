@@ -13,7 +13,7 @@ defmodule Koala.Events.Event do
     field :expenses, :float
     field :location, :string
 
-    has_many :entries, Entry
+    has_many :entries, Entry, on_delete: :delete_all
 
     timestamps()
   end

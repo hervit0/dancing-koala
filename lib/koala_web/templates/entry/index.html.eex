@@ -1,10 +1,16 @@
-<h2>Listing Entries</h2>
+<h2>Senzual - Entries</h2>
+
+<p><%= gettext "These entries are for the event of the %{date} (%{name}).", date: DateTime.to_date(@event.date), name: @event.location %></p>
+
+<span><%= link "New Entry", to: event_entry_path(@conn, :new, @event), class: "btn btn-default btn-xs" %></span>
+<span><%= link "Event", to: event_path(@conn, :show, @event), class: "btn btn-default btn-xs" %></span>
 
 <table class="table">
   <thead>
     <tr>
       <th>Customers number</th>
       <th>Price</th>
+      <th>Last update</th>
 
       <th></th>
     </tr>
@@ -14,6 +20,7 @@
     <tr>
       <td><%= entry.customers_number %></td>
       <td><%= entry.price %></td>
+      <td><%= DateTime.to_date(entry.updated_at) %></td>
 
       <td class="text-right">
         <span><%= link "Show", to: event_entry_path(@conn, :show, @event, entry), class: "btn btn-default btn-xs" %></span>
@@ -25,4 +32,3 @@
   </tbody>
 </table>
 
-<span><%= link "New Entry", to: event_entry_path(@conn, :new, @event), class: "btn btn-default btn-xs" %></span>

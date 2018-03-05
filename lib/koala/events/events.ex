@@ -18,7 +18,7 @@ defmodule Koala.Events do
 
   """
   def list_events do
-    Repo.all(Event)
+    Event |> order_by(desc: :date) |> Repo.all()
   end
 
   @doc """

@@ -1,1 +1,35 @@
 /* This file is for your main application css. */
+
+th {
+    font-size: larger;
+}
+
+td {
+    font-size: larger;
+    vertical-align: middle;
+}
+
+a.btn.btn-default.btn-xs {
+    font-size: medium;
+    width: 90px;
+}
+
+a.btn.btn-danger.btn-xs {
+    font-size: medium;
+    width: 90px;
+}
+
+.events-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.buttons-events-containers {
+    width: 40%;
+    padding: 10px;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-areas:
+        'show entries'
+        'edit delete';
+}

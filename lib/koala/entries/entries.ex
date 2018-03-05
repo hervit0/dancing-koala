@@ -18,7 +18,7 @@ defmodule Koala.Entries do
 
   """
   def list_entries do
-    Repo.all(Entry)
+    Entry |> order_by(desc: :inserted_at) |> Repo.all()
   end
 
   @doc """
