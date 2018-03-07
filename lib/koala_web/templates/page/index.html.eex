@@ -1,29 +1,33 @@
 <div class="jumbotron">
- <h2><%= gettext "Welcome to %{name}", name: "Senzual Night event tracker!" %></h2>
- <p class="lead">This web app is used for tracking any entry for the fabulous Senzual Night!</p>
-<%= if @maybe_user == nil do %>
 
-  <%= form_for @changeset, @action, fn f -> %>
-    <div class="form-group">
-      <%= label f, :username, class: "control-label" %>
-      <%= text_input f, :username, class: "form-control" %>
-      <%= error_tag f, :username %>
-    </div>
+  <%= if @maybe_user == nil do %>
+    <h2><%= gettext "Welcome to %{name}", name: "Senzual Night event tracker!" %></h2>
+    <p class="lead">This web app is used for tracking any entry for the fabulous Senzual Night!</p>
 
-    <div class="form-group">
-      <%= label f, :password, class: "control-label" %>
-      <%= password_input f, :password, class: "form-control" %>
-      <%= error_tag f, :password %>
-    </div>
+    <%= form_for @changeset, @action, fn f -> %>
+      <div class="form-group">
+        <%= label f, :username, class: "control-label" %>
+        <%= text_input f, :username, class: "form-control" %>
+        <%= error_tag f, :username %>
+      </div>
 
-    <div class="form-group">
-      <%= submit "Submit", class: "btn btn-primary" %>
-    </div>
+      <div class="form-group">
+        <%= label f, :password, class: "control-label" %>
+        <%= password_input f, :password, class: "form-control" %>
+        <%= error_tag f, :password %>
+      </div>
+
+      <div class="form-group">
+        <%= submit "Submit", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+
+  <% else %>
+
+   <h2><%= gettext "Welcome to %{name}", name: "Senzual Night event tracker!" %></h2>
+   <p class="lead">You can start by adding an event or add some entries to an event.</p>
+   <span><%= link "My Events", to: event_path(@conn, :index), class: "btn btn-default btn-xs" %></span>
+   <span><%= link "New Event", to: event_path(@conn, :new), class: "btn btn-default btn-xs" %></span>
+
   <% end %>
-
-<% else %>
-
-  <span><%= link "Logout", to: page_path(@conn, :logout), method: :post %></span>
-
-<% end %>
 </div>

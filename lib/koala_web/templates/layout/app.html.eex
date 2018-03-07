@@ -14,13 +14,14 @@
   <body>
     <div class="container">
       <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><span><%= link "Events", to: event_path(@conn, :index), class: "btn btn-default btn-xs" %></span></li>
-            <li><span><%= link "Logout", to: page_path(@conn, :logout), method: :post, class: "btn btn-default btn-xs" %></span></li>
-          </ul>
+        <nav role="navigation" class="navBar">
+          <%= if Guardian.Plug.current_resource(@conn) != nil do %>
+            <span><%= link "Events", to: event_path(@conn, :index), class: "btn btn-default btn-xs nav" %></span>
+            <span><%= link "Logout", to: page_path(@conn, :logout), method: :post, class: "btn btn-default btn-xs nav" %></span>
+          <% else %>
+          <% end %>
         </nav>
-        <span class="logo"></span>
+        <div class="logo"><%= link "", to: page_path(@conn, :login)%></div>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

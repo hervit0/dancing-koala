@@ -14,6 +14,12 @@ a.btn.btn-default.btn-xs {
     width: 90px;
 }
 
+a.btn.btn-default.btn-xs.nav {
+    font-size: medium;
+    margin-bottom: 5px;
+    width: 90px;
+}
+
 a.btn.btn-danger.btn-xs {
     font-size: medium;
     width: 90px;
@@ -32,4 +38,23 @@ a.btn.btn-danger.btn-xs {
     grid-template-areas:
         'show entries'
         'edit delete';
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.logo {
+    width: 150px;
+    height: 70px;
+    background-image: url("/images/phoenix.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.navBar {
+    display: flex;
+    flex-direction: column;
 }
