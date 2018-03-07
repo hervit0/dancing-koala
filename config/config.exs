@@ -15,6 +15,7 @@ config :koala, KoalaWeb.Endpoint,
   render_errors: [view: KoalaWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Koala.PubSub, adapter: Phoenix.PubSub.PG2]
 
+# mix guardian.gen.secret
 config :koala, Koala.Auth.Guardian,
   issuer: "koala",
   secret_key: "+lVJ4S+oyo9Qsip0o42jNnKcgNFxV+w/J9Pi8EVBnE0TBYz+iRTQKFqEAAHo1sop"
@@ -26,4 +27,6 @@ config :logger, :console,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
+System.put_env("ADMIN_USERNAME", "admin")
+System.put_env("ADMIN_PASSWORD", "obvious")
 import_config "#{Mix.env()}.exs"

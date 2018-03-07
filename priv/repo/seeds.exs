@@ -1,11 +1,8 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Koala.Repo.insert!(%Koala.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+alias Koala.Repo
+alias Koala.Auth
+alias Koala.Auth.User
+
+Repo.delete_all User
+username = Map.fetch!(System.get_env(), "ADMIN_USERNAME")
+password = Map.fetch!(System.get_env(), "ADMIN_PASSWORD")
+Auth.create_user(%{username: username, password: password})

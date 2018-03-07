@@ -29,3 +29,8 @@ Deploy:
 ```
 git push heroku master
 ```
+
+```
+heroku run MIX_ENV=prod mix ecto.migrate
+heroku run MIX_ENV=prod mix run priv/repo/seeds.exs
+```
