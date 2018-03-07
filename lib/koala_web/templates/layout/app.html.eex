@@ -16,8 +16,8 @@
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
-            <%# <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li> %>
             <li><span><%= link "Events", to: event_path(@conn, :index), class: "btn btn-default btn-xs" %></span></li>
+            <li><span><%= link "Logout", to: page_path(@conn, :logout), method: :post, class: "btn btn-default btn-xs" %></span></li>
           </ul>
         </nav>
         <span class="logo"></span>

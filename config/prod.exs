@@ -27,6 +27,10 @@ config :koala, Koala.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
   ssl: true
 
+config :koala, KoalaWeb.Auth.Guardian,
+  issuer: "dancing_koala",
+  secret_key: Map.fetch!(System.get_env(), "GUARDIAN_SECRET_KEY")
+
 # Do not print debug messages in production
 config :logger, level: :info
 

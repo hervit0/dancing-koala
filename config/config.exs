@@ -6,16 +6,18 @@
 use Mix.Config
 
 # General application configuration
-config :koala,
-  ecto_repos: [Koala.Repo]
+config :koala, ecto_repos: [Koala.Repo]
 
 # Configures the endpoint
 config :koala, KoalaWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "ebFZwIuOJhvI8xZvnYW1h9asoUIBqe6sf0baE/p5lWyIAjyawb1vxUVdYyGsWmNA",
   render_errors: [view: KoalaWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Koala.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Koala.PubSub, adapter: Phoenix.PubSub.PG2]
+
+config :koala, Koala.Auth.Guardian,
+  issuer: "koala",
+  secret_key: "+lVJ4S+oyo9Qsip0o42jNnKcgNFxV+w/J9Pi8EVBnE0TBYz+iRTQKFqEAAHo1sop"
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -24,4 +26,4 @@ config :logger, :console,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"
