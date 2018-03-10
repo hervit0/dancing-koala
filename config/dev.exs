@@ -11,8 +11,14 @@ config :koala, KoalaWeb.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
-                    cd: Path.expand("../assets", __DIR__)]]
+  watchers: [
+    node: [
+      "node_modules/brunch/bin/brunch",
+      "watch",
+      "--stdin",
+      cd: Path.expand("../assets", __DIR__)
+    ]
+  ]
 
 # ## SSL Support
 #
@@ -54,5 +60,5 @@ config :koala, Koala.Repo,
   username: "koala",
   password: "password",
   database: "koala_dev",
-  hostname: "localhost",
+  hostname: System.get_env("DATABASE_HOST"),
   pool_size: 10

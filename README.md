@@ -2,33 +2,31 @@
 
 ## Overview
 
+Still in WIP.
+
 When your best friend is asking for a service, you cannot refuse `¯\_(ツ)_/¯`.
+
+Dancing Koala is an Elixir webapp, using the Phoenix framework. It has been developed under Docker and it's using to CircleCI to ensure continuous delivery towards the Heroku platform.
 
 ## Prerequisites
 
-WIP
-
-OR
-
-- Docker :smirk:
-
-## Install dependencies
-
-WIP
+- [`docker-compose`](https://docs.docker.com/compose/install/#install-compose)
 
 ## Run locally
 
-After installing the dependencies, run:
+Run: `docker-compose up`
+
+Seed the DB if needed:
 ```
-WIP
+docker exec -it $(docker ps -aqf "name=dancingkoala_dancing-koala" | head -1) sh
+mix run priv/repo/seeds.exs
 ```
 
 ## Run tests
 
-After installing the dependencies, run:
-```
 WIP
-```
+
+Run: `docker-compose -f docker-compose.test.yml run dancing-koala-test`
 
 ## Acknowledgment
 

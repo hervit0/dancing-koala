@@ -1,0 +1,24 @@
+# docker-compose up --build
+
+version: '3'
+services:
+  dancing-koala-db:
+    image: 'postgres:9.6-alpine'
+    ports:
+      - '5434:5432'
+    environment:
+      POSTGRES_USER: koala
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: koala_dev
+  dancing-koala:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - dancing-koala-db
+    environment:
+      DATABASE_HOST: dancing-koala-db
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: obvious
+    ports:
+      - '4000:4000'

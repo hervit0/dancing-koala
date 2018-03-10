@@ -1,3 +1,5 @@
+# Build it: docker build -t dancing-koala:latest .
+
 # base image elixer to start with
 FROM elixir:1.6.0
 
@@ -33,5 +35,3 @@ RUN node node_modules/brunch/bin/brunch build
 
 # run phoenix in *dev* mode on port 4000
 CMD mix do ecto.migrate, phx.server
-
-# Build it: docker build -t dancing-koala:latest .

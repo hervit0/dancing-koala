@@ -5,11 +5,12 @@
 FROM elixir:1.6.0-alpine
 ARG APP_NAME=dancing-koala
 ARG PHOENIX_SUBDIR=.
-ENV MIX_ENV=prod REPLACE_OS_VARS=true TERM=xterm
+ENV REPLACE_OS_VARS=true TERM=xterm
+# ENV MIX_ENV=prod REPLACE_OS_VARS=true TERM=xterm
 WORKDIR /opt/app
 RUN mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez --force
 RUN apk update \
-    && apk --no-cache --update add nodejs nodejs-npm \
+    && apk --no-cache --update add nodejs nodejs-npm build-base\
     && mix local.rebar --force \
     && mix local.hex --force
 ADD . .
