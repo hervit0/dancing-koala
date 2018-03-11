@@ -20,5 +20,6 @@ services:
       DATABASE_HOST: dancing-koala-db
       ADMIN_USERNAME: admin
       ADMIN_PASSWORD: obvious
+      MIX_ENV: dev
     ports:
       - '4000:4000'

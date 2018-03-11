@@ -14,6 +14,8 @@ config :koala, Koala.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
+  # username: System.get_env("DATABASE_USERNAME"),
+  # password: System.get_env("DATABASE_PASSWORD"),
   database: "koala_test",
   hostname: System.get_env("DATABASE_HOST"),
   pool: Ecto.Adapters.SQL.Sandbox
