@@ -1,0 +1,12 @@
+version: '2'
+options:
+  compose-dev-file-path: docker-compose.override.yml
+syncs:
+  dancing-koala-sync:
+    src: .
+    sync_excludes:
+      - .git
+      - .git-crypt
+      - _build
+      - .elixir_ls
+      - deps

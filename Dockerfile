@@ -2,7 +2,7 @@
 # docker build --no-cache -t dancing-koala .
 # docker run -it --rm -p 8080:8080 dancing-koala
 
-FROM elixir:1.6.0-alpine
+FROM elixir:1.6.3-alpine
 ARG APP_NAME=dancing-koala
 ARG PHOENIX_SUBDIR=.
 ENV REPLACE_OS_VARS=true TERM=xterm
@@ -10,7 +10,7 @@ ENV REPLACE_OS_VARS=true TERM=xterm
 WORKDIR /opt/app
 RUN mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez --force
 RUN apk update \
-    && apk --no-cache --update add nodejs nodejs-npm build-base\
+    && apk --no-cache --update add bash nodejs nodejs-npm build-base\
     && mix local.rebar --force \
     && mix local.hex --force
 ADD . .
@@ -20,7 +20,9 @@ RUN cd ${PHOENIX_SUBDIR}/assets \
     && ./node_modules/brunch/bin/brunch build -p \
     && cd .. \
     && mix phx.digest
-CMD mix do ecto.create, ecto.migrate, phx.server
+RUN mix ecto.create
+RUN mix ecto.migrate
+CMD phx.server
 
 # Using distillery for realase
 # RUN mix release --env=prod --verbose \

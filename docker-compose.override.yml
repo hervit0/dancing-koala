@@ -1,5 +1,3 @@
-# docker-compose up --build
-
 version: '3'
 services:
   dancing-koala-db:
@@ -13,7 +11,8 @@ services:
   dancing-koala:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
+    command: sh -c "while sleep 1; do :; done"
     depends_on:
       - dancing-koala-db
     environment:
@@ -23,3 +22,6 @@ services:
       MIX_ENV: dev
     ports:
       - '4000:4000'
+volumes:
+  dancing-koala-sync:
+    external: true

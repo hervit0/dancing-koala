@@ -11,8 +11,23 @@ Dancing Koala is an Elixir webapp, using the Phoenix framework. It has been deve
 ## Prerequisites
 
 - [`docker-compose`](https://docs.docker.com/compose/install/#install-compose)
+- [dex bash](https://github.com/Driftrock/dex/blob/master/dex) and its dependencies
 
 ## Run locally
+
+### On the raw OS (not recommended)
+
+Hum, too much stuff required, keep reading.
+
+### With Docker (not recommended)
+
+Not recommended as you will need to configure a Postgres instance on you local.
+```
+docker build --no-cache -t dancing-koala .
+docker run -it --rm -p 8080:8080 dancing-koala
+```
+
+### With Docker Compose (not recommended)
 
 Run: `docker-compose up`
 
@@ -22,11 +37,22 @@ docker exec -it $(docker ps -aqf "name=dancingkoala_dancing-koala" | head -1) sh
 mix run priv/repo/seeds.exs
 ```
 
+### With Dex bash
+
+```
+dex bash
+bash-4.4# mix ecto.create && mix ecto.migrate
+bash-4.4# mix run priv/repo/seeds.exs
+```
+
 ## Run tests
 
 WIP
 
-Run: `docker-compose -f docker-compose.test.yml run dancing-koala-test`
+Run:
+```
+docker-compose -f docker-compose.test.yml run dancing-koala-test
+```
 
 ## Acknowledgment
 
