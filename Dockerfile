@@ -1,7 +1,3 @@
-# Run it:
-# docker build --no-cache -t dancing-koala .
-# docker run -it --rm -p 8080:8080 dancing-koala
-
 FROM elixir:1.6.3-alpine
 ARG APP_NAME=dancing-koala
 ARG PHOENIX_SUBDIR=.
@@ -20,8 +16,6 @@ RUN cd ${PHOENIX_SUBDIR}/assets \
     && ./node_modules/brunch/bin/brunch build -p \
     && cd .. \
     && mix phx.digest
-RUN mix ecto.create
-RUN mix ecto.migrate
 CMD phx.server
 
 # Using distillery for realase
