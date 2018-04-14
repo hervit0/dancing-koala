@@ -24,7 +24,7 @@ defmodule KoalaWeb.EntryControllerTest do
       conn = get(conn, "/events/#{event.id}/entries")
 
       assert html_response(conn, 200) =~
-               "These entries are for the event of the 2010-04-17 (some location)."
+               "These entries are for the event of the 2010-04-17 (Tabarnak)."
     end
   end
 
