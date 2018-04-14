@@ -21,7 +21,7 @@ defmodule Koala.EventsTest do
 
     test "list_events/0 returns all events" do
       event = event_fixture()
-      assert Events.list_events() == [event]
+      assert event in Events.list_events()
     end
 
     test "get_event!/1 returns the event with given id" do
