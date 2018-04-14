@@ -1,88 +1,110 @@
 defmodule KoalaWeb.EntryControllerTest do
   use KoalaWeb.ConnCase
 
-  alias Koala.Entries
+  alias Koala.TestSupport.Factories.EventFactory
+  alias Koala.TestSupport.Factories.EntryFactory
 
   @create_attrs %{customers_number: 42, price: 120.5}
   @update_attrs %{customers_number: 43, price: 456.7}
   @invalid_attrs %{customers_number: nil, price: nil}
 
-  def fixture(:entry) do
-    {:ok, entry} = Entries.create_entry(@create_attrs)
-    entry
+  describe "GET /events/event.id/entries - Unauthenticated" do
+    test "returns 401 - unauthenticated", %{conn: conn} do
+      event = EventFactory.create()
+      conn = get(conn, "/events/#{event.id}/entries")
+
+      assert response(conn, 401) =~ "unauthenticated"
+    end
   end
 
-  describe "index" do
+  @tag :authenticated
+  describe "GET /events/event.id/entries" do
     test "lists all entries", %{conn: conn} do
-      conn = get conn, entry_path(conn, :index)
-      assert html_response(conn, 200) =~ "Listing Entries"
+      event = EventFactory.create()
+      conn = get(conn, "/events/#{event.id}/entries")
+
+      assert html_response(conn, 200) =~
+               "These entries are for the event of the 2010-04-17 (some location)."
     end
   end
 
-  describe "new entry" do
+  @tag :authenticated
+  describe "GET /events/event.id/entries/new" do
     test "renders form", %{conn: conn} do
-      conn = get conn, entry_path(conn, :new)
+      event = EventFactory.create()
+      conn = get(conn, "/events/#{event.id}/entries/new")
+
       assert html_response(conn, 200) =~ "New Entry"
     end
   end
 
-  describe "create entry" do
+  describe "POST /events/event.id/entries" do
+    @tag :authenticated
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post conn, entry_path(conn, :create), entry: @create_attrs
+      event = EventFactory.create()
+      post_response = post(conn, "/events/#{event.id}/entries", entry: @create_attrs)
 
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == entry_path(conn, :show, id)
+      assert %{id: id, event_id: event_id} = redirected_params(post_response)
+      assert redirected_to(post_response) == "/events/#{event_id}/entries/#{id}"
 
-      conn = get conn, entry_path(conn, :show, id)
-      assert html_response(conn, 200) =~ "Show Entry"
+      get_response = get(conn, "/events/#{event.id}/entries/#{id}")
+      assert html_response(get_response, 200) =~ "Show Entry"
     end
 
+    @tag :authenticated
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, entry_path(conn, :create), entry: @invalid_attrs
+      event = EventFactory.create()
+      conn = post(conn, "/events/#{event.id}/entries", entry: @invalid_attrs)
+
       assert html_response(conn, 200) =~ "New Entry"
     end
   end
 
-  describe "edit entry" do
-    setup [:create_entry]
+  @tag :authenticated
+  describe "GET /events/event.id/entries/entry.id/edit" do
+    test "renders form for editing chosen entry", %{conn: conn} do
+      {entry, event} = EntryFactory.create_with_event()
+      conn = get(conn, "/events/#{event.id}/entries/#{entry.id}/edit")
 
-    test "renders form for editing chosen entry", %{conn: conn, entry: entry} do
-      conn = get conn, entry_path(conn, :edit, entry)
       assert html_response(conn, 200) =~ "Edit Entry"
     end
   end
 
-  describe "update entry" do
-    setup [:create_entry]
+  describe "PUT /events/event.id/entries/entry.id" do
+    @tag :authenticated
+    test "redirects when data is valid", %{conn: conn} do
+      {entry, event} = EntryFactory.create_with_event()
+      put_response = put(conn, "/events/#{event.id}/entries/#{entry.id}", entry: @update_attrs)
 
-    test "redirects when data is valid", %{conn: conn, entry: entry} do
-      conn = put conn, entry_path(conn, :update, entry), entry: @update_attrs
-      assert redirected_to(conn) == entry_path(conn, :show, entry)
+      assert %{id: id, event_id: event_id} = redirected_params(put_response)
+      assert redirected_to(put_response) == "/events/#{event_id}/entries/#{id}"
 
-      conn = get conn, entry_path(conn, :show, entry)
-      assert html_response(conn, 200)
+      get_response = get(conn, "/events/#{event.id}/entries/#{id}")
+      assert html_response(get_response, 200) =~ "Show Entry"
     end
 
-    test "renders errors when data is invalid", %{conn: conn, entry: entry} do
-      conn = put conn, entry_path(conn, :update, entry), entry: @invalid_attrs
+    @tag :authenticated
+    test "renders errors when data is invalid", %{conn: conn} do
+      {entry, event} = EntryFactory.create_with_event()
+      conn = put(conn, "/events/#{event.id}/entries/#{entry.id}", entry: @invalid_attrs)
+
       assert html_response(conn, 200) =~ "Edit Entry"
     end
   end
 
-  describe "delete entry" do
-    setup [:create_entry]
+  @tag :authenticated
+  describe "DELETE /events/event.id/entries/entry.id" do
+    test "deletes chosen entry", %{conn: conn} do
+      {entry, event} = EntryFactory.create_with_event()
+      delete_response = delete(conn, "/events/#{event.id}/entries/#{entry.id}")
 
-    test "deletes chosen entry", %{conn: conn, entry: entry} do
-      conn = delete conn, entry_path(conn, :delete, entry)
-      assert redirected_to(conn) == entry_path(conn, :index)
-      assert_error_sent 404, fn ->
-        get conn, entry_path(conn, :show, entry)
-      end
+      assert %{event_id: event_id} = redirected_params(delete_response)
+      assert event_id == event.id
+      assert redirected_to(delete_response) == "/events/#{event.id}/entries"
+
+      assert_error_sent(404, fn ->
+        get(conn, "/events/#{event.id}/entries/#{entry.id}")
+      end)
     end
-  end
-
-  defp create_entry(_) do
-    entry = fixture(:entry)
-    {:ok, entry: entry}
   end
 end

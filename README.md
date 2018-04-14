@@ -45,6 +45,31 @@ bash-4.4# mix ecto.create && mix ecto.migrate
 bash-4.4# mix run priv/repo/seeds.exs
 ```
 
+### Served routes
+
+```
+       page_path  GET     /                                   KoalaWeb.PageController :index
+       page_path  POST    /                                   KoalaWeb.PageController :login
+       page_path  POST    /logout                             KoalaWeb.PageController :logout
+       page_path  GET     /secret                             KoalaWeb.PageController :secret
+      event_path  GET     /events                             KoalaWeb.EventController :index
+      event_path  GET     /events/:id/edit                    KoalaWeb.EventController :edit
+      event_path  GET     /events/new                         KoalaWeb.EventController :new
+      event_path  GET     /events/:id                         KoalaWeb.EventController :show
+      event_path  POST    /events                             KoalaWeb.EventController :create
+      event_path  PATCH   /events/:id                         KoalaWeb.EventController :update
+                  PUT     /events/:id                         KoalaWeb.EventController :update
+      event_path  DELETE  /events/:id                         KoalaWeb.EventController :delete
+event_entry_path  GET     /events/:event_id/entries           KoalaWeb.EntryController :index
+event_entry_path  GET     /events/:event_id/entries/:id/edit  KoalaWeb.EntryController :edit
+event_entry_path  GET     /events/:event_id/entries/new       KoalaWeb.EntryController :new
+event_entry_path  GET     /events/:event_id/entries/:id       KoalaWeb.EntryController :show
+event_entry_path  POST    /events/:event_id/entries           KoalaWeb.EntryController :create
+event_entry_path  PATCH   /events/:event_id/entries/:id       KoalaWeb.EntryController :update
+                  PUT     /events/:event_id/entries/:id       KoalaWeb.EntryController :update
+event_entry_path  DELETE  /events/:event_id/entries/:id       KoalaWeb.EntryController :delete
+```
+
 ## Run tests
 
 WIP
@@ -59,3 +84,4 @@ docker-compose -f docker-compose.test.yml run dancing-koala-test
 Used/inspiring resources:
 - [Authentification layer](https://medium.com/@tylerpachal/session-authentication-example-for-phoenix-1-3-using-guardian-1-0-beta-a228c78478e6)
 - [One-to-Many relationship](https://hackernoon.com/introduction-fe138ac6079d)
+- [How to test Guardian?](https://stackoverflow.com/questions/37557737/stub-guardian-plug-ensureauthenticated-for-phoenix-controller-testing)

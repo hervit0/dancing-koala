@@ -1,18 +1,5 @@
 defmodule KoalaWeb.ConnCase do
-  @moduledoc """
-  This module defines the test case to be used by
-  tests that require setting up a connection.
-
-  Such tests rely on `Phoenix.ConnTest` and also
-  import other functionality to make it easier
-  to build common datastructures and query the data layer.
-
-  Finally, if the test case interacts with the database,
-  it cannot be async. For this reason, every test runs
-  inside a transaction which is reset at the beginning
-  of the test unless the test case is marked as async.
-  """
-
+  alias Koala.Auth.Guardian
   use ExUnit.CaseTemplate
 
   using do
@@ -23,16 +10,35 @@ defmodule KoalaWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint KoalaWeb.Endpoint
+
+      defp put_auth_header(%{conn: conn}) do
+        Koala.Auth.create_user(%{username: "toto", password: "africa"})
+
+        {:ok, conn: conn}
+      end
     end
   end
-
 
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Koala.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Koala.Repo, {:shared, self()})
     end
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
-  end
 
+    {conn, user} =
+      if tags[:authenticated] do
+        {:ok, user} = Koala.Auth.create_user(%{username: "toto", password: "africa"})
+
+        conn =
+          Phoenix.ConnTest.build_conn()
+          |> Guardian.Plug.sign_in(user)
+
+        {conn, user}
+      else
+        {Phoenix.ConnTest.build_conn(), nil}
+      end
+
+    {:ok, conn: conn, user: user}
+  end
 end

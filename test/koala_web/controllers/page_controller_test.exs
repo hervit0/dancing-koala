@@ -3,6 +3,9 @@ defmodule KoalaWeb.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"
-    assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+    response = html_response(conn, 200)
+
+    assert response =~ "Get started by entering your creds below."
+    assert response =~ "Welcome to Senzual Night event tracker!"
   end
 end

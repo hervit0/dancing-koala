@@ -1,6 +1,4 @@
-# docker-compose up --build
-
-version: '3'
+version: '2'
 services:
   dancing-koala-db:
     image: 'postgres:10.3-alpine'
