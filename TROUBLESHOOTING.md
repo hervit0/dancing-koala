@@ -1,5 +1,29 @@
 # Troubleshooting
 
+### Run locally
+
+#### On the raw OS (not recommended)
+
+Hum, too much stuff required, keep reading.
+
+#### With Docker (not recommended)
+
+Not recommended as you will need to configure a Postgres instance on your local.
+```
+docker build --no-cache -t dancing-koala .
+docker run -it --rm -p 8080:8080 dancing-koala
+```
+
+#### With Docker Compose (not recommended)
+
+Run: `docker-compose up`
+
+Seed the DB if needed:
+```
+docker exec -it $(docker ps -aqf "name=dancingkoala_dancing-koala" | head -1) sh
+mix run priv/repo/seeds.exs
+```
+
 ### Add a Postgres user
 
 Create a Postgres user:
